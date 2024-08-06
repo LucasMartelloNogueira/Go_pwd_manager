@@ -1,0 +1,16 @@
+go 1.22.5
+
+use (
+	./domain
+	./app/main
+	./src/routes
+	./src/server
+	./src/util
+	./src/routes/greet
+	./src/routes/userRoute
+	./src/routes/password
+	./src/usecase/usecaseUser
+	./src/controller/userController
+	./src/repository/userRepository
+	./src/CustomErrors
+)
