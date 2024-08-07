@@ -1,10 +1,11 @@
-package usecaseUser
+package user
 
 import (
 	"domain"
-	"userController"
+	repositories "repository"
+	
 )
 
 func CreateUser(createUserBody *domain.CreateUserBody) (domain.User, error) {
-	return userController.CreateUser(createUserBody)
+	return repositories.UserRepository.Create(createUserBody)
 }

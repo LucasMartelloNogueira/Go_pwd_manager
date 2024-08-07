@@ -7,10 +7,11 @@ use (
 	./src/server
 	./src/util
 	./src/routes/greet
-	./src/routes/userRoute
+	./src/routes/user
 	./src/routes/password
-	./src/usecase/usecaseUser
-	./src/controller/userController
-	./src/repository/userRepository
+	./src/usecase/user
+	./src/controller/user
+	./src/repository/user
+	./src/repository
 	./src/CustomErrors
 )

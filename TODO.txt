@@ -1,0 +1,5 @@
+1 - fix import path
+2 - terminar crud de user
+3 - ajustar path de chamadas em endpoints
+  - atual: route -> usecase -> controller -> repository
+  - correto: route -> controller -> usecase -> repository

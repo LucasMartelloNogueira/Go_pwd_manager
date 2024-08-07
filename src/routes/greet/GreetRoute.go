@@ -27,7 +27,7 @@ func greetRouteHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-var GreetRoute domain.Route = domain.Route{
+var Greet domain.Route = domain.Route{
 	Pattern: "/greet/{name}",
 	Method: http.MethodGet,
 	Handler: greetRouteHandler,

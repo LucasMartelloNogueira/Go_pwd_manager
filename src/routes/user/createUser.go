@@ -1,10 +1,10 @@
-package userRoute
+package user
 
 import (
 	"domain"
 	"net/http"
 	"util"
-	"usecaseUser"
+	controller "controller/user"
 	"encoding/json"
 	"fmt"
 )
@@ -16,7 +16,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request){
 	var body domain.CreateUserBody;
 	util.GetRequestBody(r, &body)
 
-	user, err := usecaseUser.CreateUser(&body);
+	user, err := controller.CreateUser(&body);
 
 	if err != nil {
 		errorResponse := map[string]any{
@@ -33,7 +33,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintf(w, string(responseInBytes))
 }
 
-var CreateUserRoute domain.Route = domain.Route{
+var CreateUser domain.Route = domain.Route{
 	Pattern: "/user",
 	Method: http.MethodPost,
 	Handler: createUserHandler,

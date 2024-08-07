@@ -1,4 +1,4 @@
-package userRoute
+package user
 
 import (
 	"domain"
@@ -6,17 +6,16 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"usecaseUser"
+	controller "controller/user"
 	"util"
 )
 
 
 func getUserHandler(w http.ResponseWriter, r *http.Request){
-	
 	w.Header().Set("Content-type", "application/json")
 	id, _ := strconv.Atoi(r.PathValue("id"))
 	
-	user, err := usecaseUser.GetUser(id);
+	user, err := controller.GetUser(id);
 
 	if err != nil {
 		errorResponse := map[string]any{
@@ -33,7 +32,7 @@ func getUserHandler(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintf(w, string(responseInBytes))
 }
 
-var GetUserRoute domain.Route = domain.Route{
+var GetUser domain.Route = domain.Route{
 	Pattern: "/user/{id}",
 	Method: http.MethodGet,
 	Handler: getUserHandler,
