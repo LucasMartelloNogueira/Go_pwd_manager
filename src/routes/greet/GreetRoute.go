@@ -8,27 +8,26 @@ import (
 	"util"
 )
 
-func greetRouteHandler(w http.ResponseWriter, r *http.Request) {
-	name := r.PathValue("name")
-	w.Header().Add("Content-type", "application/json")
-
-	data := map[string]any{
-		"message": fmt.Sprintf("Hello, %s", name),
-	}
-
+func helloWorlHandler(w http.ResponseWriter, r *http.Request) {
 	body := map[string]any{
+		"data": map[string]any{
+			"message": "Hello, World!",
+		},
+		"status": util.HttpStatusSuccess,
 		"statusCode": http.StatusOK,
-		"data": data,
 	}
 
-	bodyBytes, err := json.MarshalIndent(body, "", "  ")
-	util.CheckErr(err, "[GreetRoute] error encoding response json")
-	fmt.Fprintf(w, string(bodyBytes));
+	bodyBytes, _ := json.MarshalIndent(body, "", "  ")
+	
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	
+	fmt.Fprint(w, string(bodyBytes));
 }
 
 
-var Greet domain.Route = domain.Route{
-	Pattern: "/greet/{name}",
+var HelloWorld domain.Route = domain.Route{
+	Pattern: "/helloWorld",
 	Method: http.MethodGet,
-	Handler: greetRouteHandler,
+	Handler: helloWorlHandler,
 }

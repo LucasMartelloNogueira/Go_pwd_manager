@@ -7,7 +7,7 @@ import (
 )
 
 var Routes []domain.Route = []domain.Route{
-	greet.Greet,
+	greet.HelloWorld,
 	user.CreateUser,
 	user.GetUser,
 	user.UpdateUser,

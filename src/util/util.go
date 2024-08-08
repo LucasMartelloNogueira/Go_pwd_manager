@@ -51,7 +51,7 @@ func UserToRecord(user domain.User) []string{
 	}
 }
 
-func GetCsvRecords(filename string) ([][]string, error){
+func GetDataFrame(filename string) (*DataFrame, error){
 	file, err := os.Open(filename)
 	
 	if err != nil {
@@ -65,16 +65,23 @@ func GetCsvRecords(filename string) ([][]string, error){
 		return nil, err
 	}
 
+	var dataFrame *DataFrame = new(DataFrame)
+	dataFrame.Columns = records[0]
+	dataFrame.Values = records[1:]
+	
 	file.Close()
-	return records, nil
+	return dataFrame, nil
 }
 
-func WriteCsvRecords(filename string, records [][]string) error {
+func WriteDataFrameToCsv(filename string, dataFrame *DataFrame) error {
 	file, err := os.Create(filename)
 
 	if err != nil {
 		return err
 	}
+
+	var records [][]string = [][]string{dataFrame.Columns}
+	records = append(records, dataFrame.Values...)
 
 	writer := csv.NewWriter(file)
 	err = writer.WriteAll(records)
