@@ -5,5 +5,8 @@ import (
 )
 
 var (
-	ErrNotFound = errors.New("Not Found")
+	ErrNotFound = errors.New("not found")
+	ErrInternalServerError = errors.New("internal server error")
+	ErrUnexpectedSigningMehthod = errors.New("unexpected signing method")
+	ErrUnauthorized = errors.New("Unauthorized")
 )

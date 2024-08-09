@@ -1,24 +1,21 @@
 package util
 
 import (
-	"net/http"
-	"fmt"
+	"CustomErrors"
 	"encoding/json"
+	"fmt"
+	"net/http"
 )
 
 const (
-	HttpInternalServerErrorStatusMsg = "Internal Server Error"
-	HttpNotFoundStatusMsg = "Not Found"
-	HttpUnauthorizedStatusMsg = "Unauthorized"
-
 	HttpStatusSuccess = "Success"
 	HttpStatusError = "Error"
 )
 
 var errorResponseHandler map[string]http.HandlerFunc = map[string]http.HandlerFunc {
-	HttpInternalServerErrorStatusMsg: httpInternalServerErrorResponse,
-	HttpNotFoundStatusMsg: httpNotFoundResponse,
-	HttpUnauthorizedStatusMsg: httpUnauthorizedResponse,
+	CustomErrors.ErrInternalServerError.Error(): httpInternalServerErrorResponse,
+	CustomErrors.ErrNotFound.Error(): httpNotFoundResponse,
+	CustomErrors.ErrUnauthorized.Error(): httpUnauthorizedResponse,
 }
 
 func GetErrorResponseHandler(errorString string) func(http.ResponseWriter, *http.Request){
@@ -29,9 +26,20 @@ func GetErrorResponseHandler(errorString string) func(http.ResponseWriter, *http
 	return httpInternalServerErrorResponse
 }
 
-func GetHttpResponse(w http.ResponseWriter, r *http.Request, data any, err error) {
-	if err != nil {
-		handler := GetErrorResponseHandler(err.Error())
+func GetHttpResponse(w http.ResponseWriter, r *http.Request, data any, err error, isAuthenticated bool) {
+
+	var currentError error = err
+
+	if isAuthenticated {
+		var token string = r.Header.Get("Authorization")
+
+		if token == "" {
+			currentError = CustomErrors.ErrUnauthorized
+		}
+	}
+
+	if currentError != nil {
+		handler := GetErrorResponseHandler(currentError.Error())
 		handler(w, r)
 		return
 	}
@@ -73,13 +81,13 @@ func httpDefaultErrorResponse(w http.ResponseWriter, r *http.Request, httpStatus
 
 
 func httpInternalServerErrorResponse(w http.ResponseWriter, r *http.Request) {
-	httpDefaultErrorResponse(w, r, http.StatusInternalServerError, HttpInternalServerErrorStatusMsg)
+	httpDefaultErrorResponse(w, r, http.StatusInternalServerError, CustomErrors.ErrInternalServerError.Error())
 }
 
 func httpNotFoundResponse(w http.ResponseWriter, r *http.Request) {
-	httpDefaultErrorResponse(w, r, http.StatusNotFound, HttpNotFoundStatusMsg)
+	httpDefaultErrorResponse(w, r, http.StatusNotFound, CustomErrors.ErrNotFound.Error())
 }
 
 func httpUnauthorizedResponse(w http.ResponseWriter, r *http.Request) {
-	httpDefaultErrorResponse(w, r, http.StatusUnauthorized, HttpUnauthorizedStatusMsg)
+	httpDefaultErrorResponse(w, r, http.StatusUnauthorized, CustomErrors.ErrUnauthorized.Error())
 }

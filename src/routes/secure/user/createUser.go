@@ -13,7 +13,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request){
 	var body domain.CreateUserBody;
 	util.GetRequestBody(r, &body)
 	user, err := controller.CreateUser(&body);
-	util.GetHttpResponse(w, r, user, err)
+	util.GetHttpResponse(w, r, user, err, true)
 }
 
 var CreateUser domain.Route = domain.Route{

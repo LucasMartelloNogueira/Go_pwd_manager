@@ -6,9 +6,10 @@ use (
 	./src/routes
 	./src/server
 	./src/util
-	./src/routes/greet
-	./src/routes/user
-	./src/routes/password
+	./src/routes/public/helloWorld
+	./src/routes/public/auth
+	./src/routes/secure/user
+	./src/routes/secure/password
 	./src/usecase/user
 	./src/controller/user
 	./src/repository/user

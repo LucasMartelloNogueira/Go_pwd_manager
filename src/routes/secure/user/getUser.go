@@ -12,7 +12,7 @@ import (
 func getUserHandler(w http.ResponseWriter, r *http.Request){
 	id, _ := strconv.Atoi(r.PathValue("id"))
 	user, err := controller.GetUser(id);
-	util.GetHttpResponse(w, r, user, err)
+	util.GetHttpResponse(w, r, user, err, true)
 }
 
 var GetUser domain.Route = domain.Route{
