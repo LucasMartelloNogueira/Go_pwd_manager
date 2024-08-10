@@ -1,53 +1,58 @@
 package util
 
 import (
-	"domain"
+	"domain/entity"
 	"encoding/csv"
 	"encoding/json"
+	"errors"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
+	"fmt"
 )
 
-func CheckErr(err error, msg string){
-	if err != nil {
-		log.Panic(msg)
-	}
-}
 
-func GetRequestBody(r *http.Request, body any) {
+func GetRequestBody(r *http.Request, body any) error{
 	bodyBytes, err := io.ReadAll(r.Body)
-	CheckErr(err, "[util] io error reading request body")
+	if err != nil {
+		return errors.New("error reading request body")
+	}
 
 	err = json.Unmarshal(bodyBytes, &body)
-	CheckErr(err, "[util] error reading body from request")
+	if err != nil {
+		return errors.New(fmt.Sprintf("error converting request body to entity %v\n", body))
+	}
+	return nil
 }
 
-func RecordToUser(record []string) domain.User {
+func RecordToUser(record []string) (*domain.UserWithId, error) {
 
 	id, err := strconv.Atoi(record[0])
+
+	if err != nil {
+		return nil, errors.New("error converting userId (string) to int")
+	}
+
 	var name string = record[1]
 	var email string = record[2]
-	var masterPassword = record[3]
+	var password = record[3]
 
-	CheckErr(err, "[util] error converting csv record string to int")
+	var user *domain.UserWithId = new(domain.UserWithId)
+	user.Id = id
+	user.Name = name
+	user.Email = email
+	user.Password = password
 
-	return domain.User{
-		Id: id,
-		Name: name,
-		Email: email,
-		MasterPassword: masterPassword,
-	}
+	return user, nil
 }
 
-func UserToRecord(user domain.User) []string{
+func UserToRecord(user *domain.UserWithId) []string{
 	return []string{
 		strconv.FormatInt(int64(user.Id), 10),
 		user.Name,
 		user.Email,
-		user.MasterPassword,
+		user.Password,
 	}
 }
 

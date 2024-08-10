@@ -6,7 +6,9 @@ import (
 	"CustomErrors"
 )
 
-func jwtEncode(tokenClaims jwt.MapClaims) (string, error){
+var Algorithm = jwt.SigningMethodHS256.Name
+
+func JwtEncode(tokenClaims jwt.MapClaims) (string, error){
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, tokenClaims)
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
 	
@@ -18,7 +20,7 @@ func jwtEncode(tokenClaims jwt.MapClaims) (string, error){
 }
 
 
-func jwtDecode(tokenString string) (*jwt.Token, error) {
+func JwtDecode(tokenString string) (*jwt.Token, error) {
 	decodedToken, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, CustomErrors.ErrUnexpectedSigningMehthod

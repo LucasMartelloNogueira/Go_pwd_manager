@@ -1,8 +1,8 @@
 package domain
 
-type User struct {
+type UserWithId struct {
 	Id int
 	Name string
 	Email string
-	MasterPassword string
+	Password string
 }

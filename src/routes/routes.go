@@ -1,13 +1,13 @@
 package routes
 
 import (
-	"domain"
+	types "domain/types"
 	healthCheck "routes/public/helloWorld"
 	"routes/public/auth"
 	"routes/secure/user" 
 )
 
-var Routes []domain.Route = []domain.Route{
+var Routes []types.Route = []types.Route{
 	healthCheck.HelloWorld,
 
 	auth.Register,

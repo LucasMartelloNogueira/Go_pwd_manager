@@ -8,5 +8,6 @@ var (
 	ErrNotFound = errors.New("not found")
 	ErrInternalServerError = errors.New("internal server error")
 	ErrUnexpectedSigningMehthod = errors.New("unexpected signing method")
-	ErrUnauthorized = errors.New("Unauthorized")
+	ErrUnauthorized = errors.New("uauthorized")
+	ErrBadRequest = errors.New("bad request")
 )

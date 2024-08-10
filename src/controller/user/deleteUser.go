@@ -1,10 +1,10 @@
 package user
 
 import (
-	"domain"
+	"domain/entity"
 	usecase "usecase/user"
 )
 
-func DeleteUser(id int) (domain.User, error) {
+func DeleteUser(id int) (*domain.UserWithId, error) {
 	return usecase.DeleteUser(id)
 }

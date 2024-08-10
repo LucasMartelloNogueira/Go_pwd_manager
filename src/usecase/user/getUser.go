@@ -1,10 +1,10 @@
 package user
 
 import (
-	"domain"
+	"domain/entity"
 	repositories "repository"
 )
 
-func GetUser(id int) (domain.User, error) {
+func GetUser(id int) (*domain.UserWithId, error) {
 	return repositories.UserRepository.FindById(id)
 }

@@ -1,5 +1,5 @@
-id,name,email,masterPassword
-1,Lucas,lucas@gamil.com,123
+id,name,email,password
+1,Lucas,lucas@gmail.com,123
 2,Yasmim,yas@gmail.com,admin123
 3,Matheustito,petoto@gmail.com,gostozinNiteroi
 4,Petoto,petoto@gmail.com,gostozinNiteroi

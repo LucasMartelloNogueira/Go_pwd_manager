@@ -1,7 +1,7 @@
 package user
 
 import (
-	"domain"
+	types "domain/types"
 	"net/http"
 	"strconv"
 	controller "controller/user"
@@ -14,7 +14,7 @@ func deleteUserHandler(w http.ResponseWriter, r *http.Request){
 	util.GetHttpResponse(w, r, user, err, true)
 }
 
-var DeleteUser domain.Route = domain.Route{
+var DeleteUser types.Route = types.Route{
 	Pattern: "/user/{id}",
 	Method: http.MethodDelete,
 	Handler: deleteUserHandler,

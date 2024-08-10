@@ -2,7 +2,7 @@ package user
 
 import (
 	"CustomErrors"
-	"domain"
+	"domain/entity"
 	"strconv"
 	"util"
 )
@@ -12,31 +12,69 @@ type UserRepositoryCsv struct {
 }
 
 
-func (repository UserRepositoryCsv) FindById(id int) (domain.User, error){
+func (repository UserRepositoryCsv) FindById(id int) (*domain.UserWithId, error){
 	var filename string =  "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	if err != nil {
-		return domain.User{}, err
+		return nil, err
 	}
 
 	for _, userRecord := range usersDataFrame.Values{
 		userId, _ := strconv.Atoi(userRecord[0])
 		if userId == id {
-			return util.RecordToUser(userRecord), nil
+			user, err := util.RecordToUser(userRecord) 
+			if err != nil {
+				return nil, err
+			}
+			return user, nil
 		}
 	}
 
-	return domain.User{}, CustomErrors.ErrNotFound
+	return nil, CustomErrors.ErrNotFound
 
 }
 
-func (repository UserRepositoryCsv) Create(user *domain.CreateUserBody) (domain.User, error) {
+func (repository UserRepositoryCsv) FindByColumn(column string, value string) (*domain.UserWithId, error) {
+	var filename string =  "../../storage/users.csv"
+	usersDataFrame, err := util.GetDataFrame(filename)
+
+	var columnId int = -1
+
+	for i, col := range usersDataFrame.Columns {
+		if col == column {
+			columnId = i
+		}
+	}
+
+	if columnId == -1 {
+		return nil, CustomErrors.ErrInternalServerError
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, userRecord := range usersDataFrame.Values{
+		if userRecord[columnId] == value {
+			user, err := util.RecordToUser(userRecord) 
+			if err != nil {
+				return nil, err
+			}
+			return user, nil
+		}
+	}
+
+	return nil, CustomErrors.ErrNotFound
+
+}
+
+func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.UserWithId, error) {
 	var filename string =  "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	if err != nil {
-		return domain.User{}, err
+		return nil, err
 	}
 
 	maxId := -1
@@ -50,67 +88,69 @@ func (repository UserRepositoryCsv) Create(user *domain.CreateUserBody) (domain.
 
 	newId := maxId + 1
 
-	newUser := domain.User{
-		Id: newId,
-		Name: user.Name,
-		Email: user.Email,
-		MasterPassword: user.MasterPassword,
-	}
+	var newUser *domain.UserWithId = new(domain.UserWithId)
+	newUser.Id = newId
+	newUser.Name = user.Name
+	newUser.Password = user.Password
 
 	newUserRecord := util.UserToRecord(newUser)
 	usersDataFrame.Values = append(usersDataFrame.Values, newUserRecord)
 
 	err = util.WriteDataFrameToCsv(filename, usersDataFrame)
 	if err != nil {
-		return domain.User{}, err
+		return nil, err
 	}
 
 	return newUser, nil
 
 }
 
-func (repository UserRepositoryCsv) DeleteById(id int) (domain.User, error){
+func (repository UserRepositoryCsv) DeleteById(id int) (*domain.UserWithId, error){
 	var filename string =  "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	if err != nil {
-		return domain.User{}, err
+		return nil, err
 	}
 
 	deleteIndex := -1
-	var deletedUser domain.User = domain.User{}
+	var deletedUser *domain.UserWithId = new(domain.UserWithId)
 
 	for i, userRecord := range usersDataFrame.Values {
 
 		userId, _ := strconv.Atoi(userRecord[0])
 		if userId == id {
 			deleteIndex = i
-			deletedUser = util.RecordToUser(userRecord)
+			deletedUser, err = util.RecordToUser(userRecord)
+			
+			if err != nil {
+				return nil, err
+			}
 			break
 		}
 	}
 
 	if deleteIndex == -1 {
-		return domain.User{}, CustomErrors.ErrNotFound
+		return nil, CustomErrors.ErrNotFound
 	}
 
 	usersDataFrame.Values = append(usersDataFrame.Values[:deleteIndex], usersDataFrame.Values[deleteIndex+1:]...)
 
 	err = util.WriteDataFrameToCsv(filename, usersDataFrame)
 	if err != nil {
-		return domain.User{}, err
+		return nil, err
 	}
 	
 	return deletedUser, nil
 
 }
 
-func (repository UserRepositoryCsv) Update(user domain.User) (domain.User, error) {
+func (repository UserRepositoryCsv) Update(user *domain.UserWithId) (*domain.UserWithId, error) {
 	var filename string =  "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	if err != nil {
-		return domain.User{}, err
+		return nil, err
 	}
 
 	for i, userRecord := range usersDataFrame.Values {
@@ -123,7 +163,7 @@ func (repository UserRepositoryCsv) Update(user domain.User) (domain.User, error
 
 	err = util.WriteDataFrameToCsv(filename, usersDataFrame)
 	if err != nil {
-		return domain.User{}, err
+		return nil, err
 	}
 
 	return user, nil

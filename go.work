@@ -3,16 +3,22 @@ go 1.22.5
 use (
 	./domain
 	./app/main
-	./src/routes
 	./src/server
 	./src/util
+	./src/CustomErrors
+
+	./src/routes
 	./src/routes/public/helloWorld
 	./src/routes/public/auth
 	./src/routes/secure/user
 	./src/routes/secure/password
-	./src/usecase/user
+	
 	./src/controller/user
+	./src/controller/auth
+	
+	./src/usecase/user
+	./src/usecase/auth
+	
 	./src/repository/user
 	./src/repository
-	./src/CustomErrors
 )

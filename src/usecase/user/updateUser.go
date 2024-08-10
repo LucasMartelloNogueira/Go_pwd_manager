@@ -1,10 +1,10 @@
 package user
 
 import (
-	"domain"
+	"domain/entity"
 	repositories "repository"
 )
 
-func UpdateUser(user *domain.User) (domain.User, error) {
-	return repositories.UserRepository.Update(*user)
+func UpdateUser(user *domain.UserWithId) (*domain.UserWithId, error) {
+	return repositories.UserRepository.Update(user)
 }

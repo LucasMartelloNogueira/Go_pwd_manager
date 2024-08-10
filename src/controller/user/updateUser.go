@@ -1,10 +1,10 @@
 package user
 
 import (
-	"domain"
+	"domain/entity"
 	usecase "usecase/user"
 )
 
-func UpdateUser(user *domain.User) (domain.User, error) {
+func UpdateUser(user *domain.UserWithId) (*domain.UserWithId, error) {
 	return usecase.UpdateUser(user)
 }

@@ -3,7 +3,7 @@ package helloWorld
 import (
 	"fmt"
 	"net/http"
-	"domain"
+	types "domain/types"
 	"encoding/json"
 	"util"
 )
@@ -26,7 +26,7 @@ func helloWorlHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-var HelloWorld domain.Route = domain.Route{
+var HelloWorld types.Route = types.Route{
 	Pattern: "/helloWorld",
 	Method: http.MethodGet,
 	Handler: helloWorlHandler,

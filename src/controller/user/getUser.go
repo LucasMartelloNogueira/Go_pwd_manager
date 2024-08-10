@@ -1,11 +1,11 @@
 package user
 
 import (
-	"domain"
+	"domain/entity"
 	usecase "usecase/user"
 )
 
 
-func GetUser(id int) (domain.User, error){
+func GetUser(id int) (*domain.UserWithId, error){
 	return usecase.GetUser(id)
 }

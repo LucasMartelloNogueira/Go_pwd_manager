@@ -1,11 +1,11 @@
 package user
 
 import (
-	"domain"
+	"domain/entity"
 	usecase "usecase/user"
 )
 
 
-func CreateUser(createUserBody *domain.CreateUserBody) (domain.User, error){
-	return usecase.CreateUser(createUserBody)
+func CreateUser(user *domain.User) (*domain.UserWithId, error){
+	return usecase.CreateUser(user)
 }
