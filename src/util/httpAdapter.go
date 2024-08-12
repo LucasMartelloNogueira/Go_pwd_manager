@@ -9,16 +9,16 @@ import (
 
 const (
 	HttpStatusSuccess = "Success"
-	HttpStatusError = "Error"
+	HttpStatusError   = "Error"
 )
 
-var errorResponseHandler map[string]http.HandlerFunc = map[string]http.HandlerFunc {
+var errorResponseHandler map[string]http.HandlerFunc = map[string]http.HandlerFunc{
 	CustomErrors.ErrInternalServerError.Error(): httpInternalServerErrorResponse,
-	CustomErrors.ErrNotFound.Error(): httpNotFoundResponse,
-	CustomErrors.ErrUnauthorized.Error(): httpUnauthorizedResponse,
+	CustomErrors.ErrNotFound.Error():            httpNotFoundResponse,
+	CustomErrors.ErrUnauthorized.Error():        httpUnauthorizedResponse,
 }
 
-func GetErrorResponseHandler(errorString string) func(http.ResponseWriter, *http.Request){
+func GetErrorResponseHandler(errorString string) func(http.ResponseWriter, *http.Request) {
 	errHandler, ok := errorResponseHandler[errorString]
 	if ok {
 		return errHandler
@@ -46,39 +46,36 @@ func GetHttpResponse(w http.ResponseWriter, r *http.Request, data any, err error
 	httpSuccessResponse(w, r, data)
 }
 
-
 func httpDefaultResponse(w http.ResponseWriter, r *http.Request, payload any) {
 	dataInBytes, _ := json.MarshalIndent(payload, "", "  ")
 	fmt.Fprint(w, string(dataInBytes))
 }
 
-func httpSuccessResponse(w http.ResponseWriter, r *http.Request, data any){
+func httpSuccessResponse(w http.ResponseWriter, r *http.Request, data any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
-	payload := map[string]any {
-		"data": data,
-		"status": HttpStatusSuccess,
+	payload := map[string]any{
+		"data":       data,
+		"status":     HttpStatusSuccess,
 		"statusCode": http.StatusOK,
 	}
 	httpDefaultResponse(w, r, payload)
 }
 
-
 func httpDefaultErrorResponse(w http.ResponseWriter, r *http.Request, httpStatusCode int, httpStatusMessage string) {
-	payload := map[string]any {
+	payload := map[string]any{
 		"error": map[string]any{
-			"code": httpStatusCode,
+			"code":   httpStatusCode,
 			"mesage": httpStatusMessage,
 		},
-		"status": "error",
+		"status":     "error",
 		"statusCode": httpStatusCode,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(httpStatusCode)
 	httpDefaultResponse(w, r, payload)
 }
-
 
 func httpInternalServerErrorResponse(w http.ResponseWriter, r *http.Request) {
 	httpDefaultErrorResponse(w, r, http.StatusInternalServerError, CustomErrors.ErrInternalServerError.Error())

@@ -5,7 +5,7 @@ import (
 	"server"
 )
 
-func main(){
+func main() {
 	fmt.Println("server initalized")
-	server.InitServer();
+	server.InitServer()
 }

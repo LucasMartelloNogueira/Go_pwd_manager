@@ -6,5 +6,5 @@ import (
 )
 
 func Register(user *domain.User) (*domain.UserWithId, error) {
-	return repository.UserRepository.Create(user);
+	return repository.UserRepository.Create(user)
 }

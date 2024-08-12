@@ -5,7 +5,6 @@ import (
 	usecase "usecase/user"
 )
 
-
-func CreateUser(user *domain.User) (*domain.UserWithId, error){
+func CreateUser(user *domain.User) (*domain.UserWithId, error) {
 	return usecase.CreateUser(user)
 }

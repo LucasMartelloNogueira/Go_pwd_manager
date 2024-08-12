@@ -8,22 +8,20 @@ import (
 )
 
 type UserRepositoryCsv struct {
-
 }
 
-
-func (repository UserRepositoryCsv) FindById(id int) (*domain.UserWithId, error){
-	var filename string =  "../../storage/users.csv"
+func (repository UserRepositoryCsv) FindById(id int) (*domain.UserWithId, error) {
+	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	if err != nil {
 		return nil, err
 	}
 
-	for _, userRecord := range usersDataFrame.Values{
+	for _, userRecord := range usersDataFrame.Values {
 		userId, _ := strconv.Atoi(userRecord[0])
 		if userId == id {
-			user, err := util.RecordToUser(userRecord) 
+			user, err := util.RecordToUser(userRecord)
 			if err != nil {
 				return nil, err
 			}
@@ -36,7 +34,7 @@ func (repository UserRepositoryCsv) FindById(id int) (*domain.UserWithId, error)
 }
 
 func (repository UserRepositoryCsv) FindByColumn(column string, value string) (*domain.UserWithId, error) {
-	var filename string =  "../../storage/users.csv"
+	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	var columnId int = -1
@@ -55,9 +53,9 @@ func (repository UserRepositoryCsv) FindByColumn(column string, value string) (*
 		return nil, err
 	}
 
-	for _, userRecord := range usersDataFrame.Values{
+	for _, userRecord := range usersDataFrame.Values {
 		if userRecord[columnId] == value {
-			user, err := util.RecordToUser(userRecord) 
+			user, err := util.RecordToUser(userRecord)
 			if err != nil {
 				return nil, err
 			}
@@ -70,7 +68,7 @@ func (repository UserRepositoryCsv) FindByColumn(column string, value string) (*
 }
 
 func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.UserWithId, error) {
-	var filename string =  "../../storage/users.csv"
+	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	if err != nil {
@@ -79,7 +77,7 @@ func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.UserWithI
 
 	maxId := -1
 
-	for _, r := range usersDataFrame.Values{
+	for _, r := range usersDataFrame.Values {
 		id, _ := strconv.Atoi(r[0])
 		if id > maxId {
 			maxId = id
@@ -105,8 +103,8 @@ func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.UserWithI
 
 }
 
-func (repository UserRepositoryCsv) DeleteById(id int) (*domain.UserWithId, error){
-	var filename string =  "../../storage/users.csv"
+func (repository UserRepositoryCsv) DeleteById(id int) (*domain.UserWithId, error) {
+	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	if err != nil {
@@ -122,7 +120,7 @@ func (repository UserRepositoryCsv) DeleteById(id int) (*domain.UserWithId, erro
 		if userId == id {
 			deleteIndex = i
 			deletedUser, err = util.RecordToUser(userRecord)
-			
+
 			if err != nil {
 				return nil, err
 			}
@@ -140,13 +138,13 @@ func (repository UserRepositoryCsv) DeleteById(id int) (*domain.UserWithId, erro
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return deletedUser, nil
 
 }
 
 func (repository UserRepositoryCsv) Update(user *domain.UserWithId) (*domain.UserWithId, error) {
-	var filename string =  "../../storage/users.csv"
+	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
 	if err != nil {

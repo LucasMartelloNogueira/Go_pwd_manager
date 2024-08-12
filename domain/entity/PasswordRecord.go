@@ -1,8 +1,8 @@
 package domain
 
 type PasswordRecord struct {
-	Id int
+	Id          int
 	ServiceName string
-	email string
-	Password string
+	email       string
+	Password    string
 }

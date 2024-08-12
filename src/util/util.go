@@ -5,15 +5,14 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"strconv"
-	"fmt"
 )
 
-
-func GetRequestBody(r *http.Request, body any) error{
+func GetRequestBody(r *http.Request, body any) error {
 	bodyBytes, err := io.ReadAll(r.Body)
 	if err != nil {
 		return errors.New("error reading request body")
@@ -47,7 +46,7 @@ func RecordToUser(record []string) (*domain.UserWithId, error) {
 	return user, nil
 }
 
-func UserToRecord(user *domain.UserWithId) []string{
+func UserToRecord(user *domain.UserWithId) []string {
 	return []string{
 		strconv.FormatInt(int64(user.Id), 10),
 		user.Name,
@@ -56,9 +55,9 @@ func UserToRecord(user *domain.UserWithId) []string{
 	}
 }
 
-func GetDataFrame(filename string) (*DataFrame, error){
+func GetDataFrame(filename string) (*DataFrame, error) {
 	file, err := os.Open(filename)
-	
+
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +72,7 @@ func GetDataFrame(filename string) (*DataFrame, error){
 	var dataFrame *DataFrame = new(DataFrame)
 	dataFrame.Columns = records[0]
 	dataFrame.Values = records[1:]
-	
+
 	file.Close()
 	return dataFrame, nil
 }

@@ -1,21 +1,20 @@
 package user
 
 import (
+	controller "controller/user"
 	entities "domain/entity"
 	types "domain/types"
 	"net/http"
 	"util"
-	controller "controller/user"
-
 )
 
-func updateUserHandler(w http.ResponseWriter, r *http.Request){
-	var body entities.UserWithId;
+func updateUserHandler(w http.ResponseWriter, r *http.Request) {
+	var body entities.UserWithId
 	err1 := util.GetRequestBody(r, &body)
-	user, err2 := controller.UpdateUser(&body);
+	user, err2 := controller.UpdateUser(&body)
 
 	var err error
-	if err1 == nil{
+	if err1 == nil {
 		err = err2
 	}
 
@@ -24,6 +23,6 @@ func updateUserHandler(w http.ResponseWriter, r *http.Request){
 
 var UpdateUser types.Route = types.Route{
 	Pattern: "/user",
-	Method: http.MethodPut,
+	Method:  http.MethodPut,
 	Handler: updateUserHandler,
 }

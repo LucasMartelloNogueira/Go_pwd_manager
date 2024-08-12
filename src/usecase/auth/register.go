@@ -1,5 +1,5 @@
 package auth
 
-func Register(name string, email string, masterPassword string){
-	
+func Register(name string, email string, masterPassword string) {
+
 }

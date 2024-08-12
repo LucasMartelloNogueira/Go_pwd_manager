@@ -1,15 +1,15 @@
 package auth
 
 import (
+	controller "controller/auth"
 	dtos "domain/dto"
 	types "domain/types"
-	controller "controller/auth"
 	"net/http"
 	"util"
 )
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
-	var userCredentials dtos.UserCredentials;
+	var userCredentials dtos.UserCredentials
 	err1 := util.GetRequestBody(r, &userCredentials)
 	loginInfo, err2 := controller.Login(userCredentials)
 
@@ -21,9 +21,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	util.GetHttpResponse(w, r, loginInfo, err, false)
 }
 
-
 var Login types.Route = types.Route{
 	Pattern: "/auth/login",
-	Method: http.MethodPost,
+	Method:  http.MethodPost,
 	Handler: loginHandler,
 }

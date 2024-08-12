@@ -1,18 +1,17 @@
 package user
 
 import (
+	controller "controller/user"
 	entities "domain/entity"
 	types "domain/types"
 	"net/http"
 	"util"
-	controller "controller/user"
 )
 
-
-func createUserHandler(w http.ResponseWriter, r *http.Request){
-	var body entities.User;
+func createUserHandler(w http.ResponseWriter, r *http.Request) {
+	var body entities.User
 	err1 := util.GetRequestBody(r, &body)
-	user, err2 := controller.CreateUser(&body);
+	user, err2 := controller.CreateUser(&body)
 
 	var err error
 	if err1 == nil {
@@ -24,6 +23,6 @@ func createUserHandler(w http.ResponseWriter, r *http.Request){
 
 var CreateUser types.Route = types.Route{
 	Pattern: "/user",
-	Method: http.MethodPost,
+	Method:  http.MethodPost,
 	Handler: createUserHandler,
 }

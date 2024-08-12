@@ -1,10 +1,10 @@
 package helloWorld
 
 import (
-	"fmt"
-	"net/http"
 	types "domain/types"
 	"encoding/json"
+	"fmt"
+	"net/http"
 	"util"
 )
 
@@ -13,21 +13,20 @@ func helloWorlHandler(w http.ResponseWriter, r *http.Request) {
 		"data": map[string]any{
 			"message": "Hello, World!",
 		},
-		"status": util.HttpStatusSuccess,
+		"status":     util.HttpStatusSuccess,
 		"statusCode": http.StatusOK,
 	}
 
 	bodyBytes, _ := json.MarshalIndent(body, "", "  ")
-	
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	
-	fmt.Fprint(w, string(bodyBytes));
-}
 
+	fmt.Fprint(w, string(bodyBytes))
+}
 
 var HelloWorld types.Route = types.Route{
 	Pattern: "/helloWorld",
-	Method: http.MethodGet,
+	Method:  http.MethodGet,
 	Handler: helloWorlHandler,
 }

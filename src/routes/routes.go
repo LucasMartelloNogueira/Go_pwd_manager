@@ -2,9 +2,9 @@ package routes
 
 import (
 	types "domain/types"
-	healthCheck "routes/public/helloWorld"
 	"routes/public/auth"
-	"routes/secure/user" 
+	healthCheck "routes/public/helloWorld"
+	"routes/secure/user"
 )
 
 var Routes []types.Route = []types.Route{
@@ -12,10 +12,9 @@ var Routes []types.Route = []types.Route{
 
 	auth.Register,
 	auth.Login,
-	
+
 	user.CreateUser,
 	user.GetUser,
 	user.UpdateUser,
 	user.DeleteUser,
 }
-

@@ -8,8 +8,7 @@ import (
 	"util"
 )
 
-
-func getUserHandler(w http.ResponseWriter, r *http.Request){
+func getUserHandler(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(r.PathValue("id"))
 	user, err := controller.GetUser(id)
 	util.GetHttpResponse(w, r, user, err, true)
@@ -17,6 +16,6 @@ func getUserHandler(w http.ResponseWriter, r *http.Request){
 
 var GetUser types.Route = types.Route{
 	Pattern: "/user/{id}",
-	Method: http.MethodGet,
+	Method:  http.MethodGet,
 	Handler: getUserHandler,
 }

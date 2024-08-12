@@ -5,6 +5,6 @@ import (
 	usecase "usecase/auth"
 )
 
-func Login(userCredentials dtos.UserCredentials)(*dtos.LoginResponse, error){
+func Login(userCredentials dtos.UserCredentials) (*dtos.LoginResponse, error) {
 	return usecase.Login(userCredentials)
 }
