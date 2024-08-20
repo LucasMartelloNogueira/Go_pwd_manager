@@ -1,28 +1,39 @@
 package user
 
 import (
-	controller "controller/user"
+	"controller/user"
 	entities "domain/entity"
-	types "domain/types"
 	"net/http"
 	"util"
 )
 
-func createUserHandler(w http.ResponseWriter, r *http.Request) {
+const (
+	createUserPattern string = "/user"
+	createUserMethod string = http.MethodPost 
+)
+
+type CreateUserRoute struct {
+	Controller user.CreateUserController
+}
+
+func (route CreateUserRoute) Pattern() string {
+	return createUserPattern
+}
+
+func (route CreateUserRoute) Method() string {
+	return createUserMethod
+}
+
+func (route CreateUserRoute) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	var body entities.User
 	err1 := util.GetRequestBody(r, &body)
-	user, err2 := controller.CreateUser(&body)
+	user, err2 := route.Controller.CreateUser(&body)
 
 	var err error
 	if err1 == nil {
 		err = err2
 	}
 
-	util.GetHttpResponse(w, r, user, err, true)
+	util.GetHttpResponse(w, r, user, err, true)	
 }
 
-var CreateUser types.Route = types.Route{
-	Pattern: "/user",
-	Method:  http.MethodPost,
-	Handler: createUserHandler,
-}

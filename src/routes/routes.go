@@ -3,18 +3,35 @@ package routes
 import (
 	types "domain/types"
 	"routes/public/auth"
-	healthCheck "routes/public/helloWorld"
+	"routes/public/helloWorld"
+
 	"routes/secure/user"
+	controllers "controller"
+)
+
+var (
+	HelloWorldRoute types.Route = helloWorld.HelloWorldRoute{}
+
+	LoginRoute types.Route = auth.LoginRoute{Controller: controllers.LoginController}
+	RegisterRoute types.Route = auth.RegisterRoute{Controller: controllers.RegisterController}
+
+	CreateUserRoute types.Route = user.CreateUserRoute{Controller: controllers.CreateUserController}
+	DeleteUserRoute types.Route = user.DeleteUserRoute{Controller: controllers.DeleteUserController}
+	GetUserRoute types.Route = user.GetUserRoute{Controller: controllers.GetUserController}
+	UpdateUserRoute types.Route = user.UpdateUserRoute{Controller: controllers.UpdateUserController}
 )
 
 var Routes []types.Route = []types.Route{
-	healthCheck.HelloWorld,
+	// healthcheck
+	HelloWorldRoute,
 
-	auth.Register,
-	auth.Login,
+	// auth
+	LoginRoute,
+	RegisterRoute,
 
-	user.CreateUser,
-	user.GetUser,
-	user.UpdateUser,
-	user.DeleteUser,
+	// user
+	CreateUserRoute,
+	DeleteUserRoute,
+	GetUserRoute,
+	UpdateUserRoute,
 }

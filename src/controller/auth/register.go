@@ -1,10 +1,19 @@
 package auth
 
 import (
-	"domain/entity"
-	repository "repository"
+	entities "domain/entity"
+	"usecase/auth"
 )
 
-func Register(user *domain.User) (*domain.UserWithId, error) {
-	return repository.UserRepository.Create(user)
+type RegisterController interface {
+	Register(user *entities.User) (entities.UserWithId, error)
 }
+
+type RegisterControllerImpl struct {
+	Usecase auth.RegisterUsecase
+}
+
+func (controller RegisterControllerImpl) Register(user *entities.User) (entities.UserWithId, error) {
+	return controller.Usecase.Register(user)
+}
+

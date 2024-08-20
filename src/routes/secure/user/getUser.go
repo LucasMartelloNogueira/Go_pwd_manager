@@ -1,21 +1,31 @@
 package user
 
 import (
-	controller "controller/user"
-	types "domain/types"
+	"controller/user"
 	"net/http"
 	"strconv"
 	"util"
 )
 
-func getUserHandler(w http.ResponseWriter, r *http.Request) {
-	id, _ := strconv.Atoi(r.PathValue("id"))
-	user, err := controller.GetUser(id)
-	util.GetHttpResponse(w, r, user, err, true)
+const (
+	getUserPattern string = "/user/{id}"
+	getUserMethod = http.MethodGet
+)
+
+type GetUserRoute struct {
+	Controller user.GetUserController
 }
 
-var GetUser types.Route = types.Route{
-	Pattern: "/user/{id}",
-	Method:  http.MethodGet,
-	Handler: getUserHandler,
+func (route GetUserRoute) Pattern() string {
+	return getUserPattern
+}
+
+func (route GetUserRoute) Method() string {
+	return getUserMethod
+}
+
+func (route GetUserRoute) HandleRequest(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.PathValue("id"))
+	user, err := route.Controller.GetUser(id)
+	util.GetHttpResponse(w, r, user, err, true) 
 }

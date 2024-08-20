@@ -2,9 +2,17 @@ package user
 
 import (
 	"domain/entity"
-	usecase "usecase/user"
+	"usecase/user"
 )
 
-func DeleteUser(id int) (*domain.UserWithId, error) {
-	return usecase.DeleteUser(id)
+type DeleteUserController interface {
+	DeleteUser(id int) (*domain.UserWithId, error)
+}
+
+type DeleteUserControllerImpl struct {
+	Usecase user.DeleteUserUsecase
+}
+
+func (controller DeleteUserControllerImpl) DeleteUser(id int) (*domain.UserWithId, error) {
+	return controller.Usecase.DeleteUser(id)
 }

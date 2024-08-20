@@ -3,21 +3,29 @@ package auth
 import (
 	"CustomErrors"
 	dtos "domain/dto"
-	repositories "repository"
+	"repository/user"
 	"strconv"
 	"time"
 	"util"
 )
 
-func Login(userCredentials dtos.UserCredentials) (*dtos.LoginResponse, error) {
-	user, err := repositories.UserRepository.FindByColumn("email", userCredentials.Email)
+type LoginUsecase interface {
+	Login(userCredentials dtos.UserCredentials) (dtos.LoginResponse, error)
+}
+
+type LoginUsecaseImpl struct {
+	Repository user.UserRepository
+}
+
+func (usecase LoginUsecaseImpl) Login(userCredentials dtos.UserCredentials) (dtos.LoginResponse, error) {
+	user, err := usecase.Repository.FindByColumn("email", userCredentials.Email)
 
 	if err != nil {
-		return nil, err
+		return dtos.LoginResponseBuilder(), err
 	}
 
 	if strconv.Itoa(userCredentials.Password) != user.Password {
-		return nil, CustomErrors.ErrBadRequest
+		return dtos.LoginResponseBuilder(), CustomErrors.ErrBadRequest
 	}
 
 	tokenClaims := map[string]any{
@@ -29,11 +37,8 @@ func Login(userCredentials dtos.UserCredentials) (*dtos.LoginResponse, error) {
 
 	token, err := util.JwtEncode(tokenClaims)
 	if err != nil {
-		return nil, CustomErrors.ErrInternalServerError
+		return dtos.LoginResponseBuilder(), CustomErrors.ErrInternalServerError
 	}
 
-	return &dtos.LoginResponse{
-		UserId: user.Id,
-		Token:  token,
-	}, nil
+	return dtos.LoginResponseBuilder(dtos.WithUserId(user.Id), dtos.WithToken(token)), nil
 }

@@ -89,6 +89,7 @@ func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.UserWithI
 	var newUser *domain.UserWithId = new(domain.UserWithId)
 	newUser.Id = newId
 	newUser.Name = user.Name
+	newUser.Email = user.Email
 	newUser.Password = user.Password
 
 	newUserRecord := util.UserToRecord(newUser)

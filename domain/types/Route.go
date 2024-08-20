@@ -1,16 +1,21 @@
 package domain
 
 import (
-	"fmt"
 	"net/http"
 )
 
-type Route struct {
-	Pattern string
-	Method  string
-	Handler http.HandlerFunc
+type Route interface {
+	Pattern() string
+	Method() string
+	HandleRequest(w http.ResponseWriter, r *http.Request)
 }
 
-func (r *Route) GetMethodPatternStr() string {
-	return fmt.Sprintf("%s %s", r.Method, r.Pattern)
-}
+// type Route struct {
+// 	Pattern string
+// 	Method  string
+// 	Handler http.HandlerFunc
+// }
+
+// func (r *Route) GetMethodPatternStr() string {
+// 	return fmt.Sprintf("%s %s", r.Method, r.Pattern)
+// }

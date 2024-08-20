@@ -2,9 +2,18 @@ package user
 
 import (
 	"domain/entity"
-	usecase "usecase/user"
+	"usecase/user"
 )
 
-func UpdateUser(user *domain.UserWithId) (*domain.UserWithId, error) {
-	return usecase.UpdateUser(user)
+type UpdateUserController interface {
+	UpdateUser(user *domain.UserWithId) (*domain.UserWithId, error)
+}
+
+type UpdateUserControllerImpl struct {
+	Usecase user.UpdateUserUsecase
+}
+
+
+func (controller UpdateUserControllerImpl) UpdateUser(user *domain.UserWithId) (*domain.UserWithId, error) {
+	return controller.Usecase.UpdateUser(user)
 }

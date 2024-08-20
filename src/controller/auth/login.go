@@ -2,9 +2,18 @@ package auth
 
 import (
 	dtos "domain/dto"
-	usecase "usecase/auth"
+	"usecase/auth"
 )
 
-func Login(userCredentials dtos.UserCredentials) (*dtos.LoginResponse, error) {
-	return usecase.Login(userCredentials)
+type LoginController interface {
+	Login(userCredentials dtos.UserCredentials) (dtos.LoginResponse, error)
+}
+
+type LoginControllerImpl struct {
+	Usecase auth.LoginUsecase
+}
+
+
+func (controller LoginControllerImpl) Login(userCredentials dtos.UserCredentials) (dtos.LoginResponse, error) {
+	return controller.Usecase.Login(userCredentials)
 }

@@ -1,23 +1,34 @@
 package auth
 
 import (
-	controller "controller/auth"
+	"controller/auth"
 	entities "domain/entity"
-	types "domain/types"
 	"net/http"
 	"util"
 )
 
-func registerHandler(w http.ResponseWriter, r *http.Request) {
+const (
+	registerPattern = "/auth/register"
+	registerMethod = http.MethodPost
+)
+
+type RegisterRoute struct {
+	Controller auth.RegisterController
+}
+
+func (route RegisterRoute) Pattern() string {
+	return registerPattern
+}
+
+func (route RegisterRoute) Method() string {
+	return registerMethod
+}
+
+func (route RegisterRoute) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	var user entities.User
 	util.GetRequestBody(r, &user)
 
-	userWithId, err := controller.Register(&user)
-	util.GetHttpResponse(w, r, userWithId, err, true)
+	userWithId, err := route.Controller.Register(&user)
+	util.GetHttpResponse(w, r, userWithId, err, false)
 }
 
-var Register types.Route = types.Route{
-	Pattern: "/auth/register",
-	Method:  http.MethodPost,
-	Handler: registerHandler,
-}

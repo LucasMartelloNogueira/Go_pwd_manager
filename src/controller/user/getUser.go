@@ -2,9 +2,17 @@ package user
 
 import (
 	"domain/entity"
-	usecase "usecase/user"
+	"usecase/user"
 )
 
-func GetUser(id int) (*domain.UserWithId, error) {
-	return usecase.GetUser(id)
+type GetUserController interface {
+	GetUser(id int) (*domain.UserWithId, error)
+}
+
+type GetUserControllerImpl struct {
+	Usecase user.GetUserUsecase
+}
+
+func (controller GetUserControllerImpl) GetUser(id int) (*domain.UserWithId, error) {
+	return controller.Usecase.GetUser(id)
 }

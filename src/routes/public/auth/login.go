@@ -1,17 +1,33 @@
 package auth
 
 import (
-	controller "controller/auth"
+	"controller/auth"
 	dtos "domain/dto"
-	types "domain/types"
 	"net/http"
 	"util"
 )
 
-func loginHandler(w http.ResponseWriter, r *http.Request) {
+const (
+	loginPattern = "/auth/login"
+	loginMethod = http.MethodPost
+)
+
+type LoginRoute struct {
+	Controller auth.LoginController
+}
+
+func (route LoginRoute) Pattern() string {
+	return loginPattern
+}
+
+func (route LoginRoute) Method() string {
+	return loginMethod
+}
+
+func (route LoginRoute) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	var userCredentials dtos.UserCredentials
 	err1 := util.GetRequestBody(r, &userCredentials)
-	loginInfo, err2 := controller.Login(userCredentials)
+	loginInfo, err2 := route.Controller.Login(userCredentials)
 
 	var err error
 	if err1 == nil {
@@ -19,10 +35,4 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	util.GetHttpResponse(w, r, loginInfo, err, false)
-}
-
-var Login types.Route = types.Route{
-	Pattern: "/auth/login",
-	Method:  http.MethodPost,
-	Handler: loginHandler,
 }

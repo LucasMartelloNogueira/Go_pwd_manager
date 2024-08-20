@@ -13,9 +13,11 @@ use (
 	./src/routes/secure/user
 	./src/routes/secure/password
 	
+	./src/controller
 	./src/controller/user
 	./src/controller/auth
 	
+	./src/usecase
 	./src/usecase/user
 	./src/usecase/auth
 	
