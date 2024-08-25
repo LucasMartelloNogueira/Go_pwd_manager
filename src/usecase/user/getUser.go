@@ -2,8 +2,8 @@ package user
 
 import (
 	"domain/entity"
-	"repository/user"
 	repositories "repository"
+	"repository/user"
 )
 
 type GetUserUsecase interface {

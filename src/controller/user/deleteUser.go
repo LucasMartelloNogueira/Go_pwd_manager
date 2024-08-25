@@ -1,18 +1,18 @@
 package user
 
 import (
-	"domain/entity"
+	"net/http"
+	"strconv"
 	"usecase/user"
+	"util"
 )
 
-type DeleteUserController interface {
-	DeleteUser(id int) (*domain.UserWithId, error)
-}
-
-type DeleteUserControllerImpl struct {
+type DeleteUserController struct {
 	Usecase user.DeleteUserUsecase
 }
 
-func (controller DeleteUserControllerImpl) DeleteUser(id int) (*domain.UserWithId, error) {
-	return controller.Usecase.DeleteUser(id)
+func (controller DeleteUserController) HandleRequest(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.PathValue("id"))
+	user, err := controller.Usecase.DeleteUser(id)
+	util.GetHttpResponse(w, r, user, err, true)
 }

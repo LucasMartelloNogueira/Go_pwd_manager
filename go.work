@@ -8,19 +8,7 @@ use (
 	./src/CustomErrors
 
 	./src/routes
-	./src/routes/public/helloWorld
-	./src/routes/public/auth
-	./src/routes/secure/user
-	./src/routes/secure/password
-	
 	./src/controller
-	./src/controller/user
-	./src/controller/auth
-	
 	./src/usecase
-	./src/usecase/user
-	./src/usecase/auth
-	
-	./src/repository/user
 	./src/repository
 )

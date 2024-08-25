@@ -1,12 +1,11 @@
 package domain
 
 type UserWithId struct {
-	Id       int `json:"id"`
+	Id       int    `json:"id"`
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
-
 
 type UserWithIdOpt func(userWithId *UserWithId)
 
@@ -36,9 +35,9 @@ func WithPassWord(password string) UserWithIdOpt {
 
 func UserWithIdBuilder(opts ...UserWithIdOpt) UserWithId {
 	userWithId := UserWithId{
-		Id: 0,
-		Name: "",
-		Email: "",
+		Id:       0,
+		Name:     "",
+		Email:    "",
 		Password: "",
 	}
 

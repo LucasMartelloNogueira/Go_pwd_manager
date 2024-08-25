@@ -2,18 +2,19 @@ package auth
 
 import (
 	entities "domain/entity"
+	"net/http"
 	"usecase/auth"
+	"util"
 )
 
-type RegisterController interface {
-	Register(user *entities.User) (entities.UserWithId, error)
-}
-
-type RegisterControllerImpl struct {
+type RegisterController struct {
 	Usecase auth.RegisterUsecase
 }
 
-func (controller RegisterControllerImpl) Register(user *entities.User) (entities.UserWithId, error) {
-	return controller.Usecase.Register(user)
-}
+func (controller RegisterController) HandleRequest(w http.ResponseWriter, r *http.Request) {
+	var user entities.User
+	util.GetRequestBody(r, &user)
 
+	userWithId, err := controller.Usecase.Register(&user)
+	util.GetHttpResponse(w, r, userWithId, err, false)
+}

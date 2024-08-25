@@ -1,28 +1,16 @@
 package helloWorld
 
 import (
+	types "domain/types"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"util"
 )
 
-const (
-	helloWorldPattern = "/helloWorld"
-	helloWorldMethod = http.MethodGet
-)
+type HelloWorldController struct{}
 
-type HelloWorldRoute struct {}
-
-func (route HelloWorldRoute) Pattern() string {
-	return helloWorldPattern
-}
-
-func (route HelloWorldRoute) Method() string {
-	return helloWorldMethod
-}
-
-func (route HelloWorldRoute) HandleRequest(w http.ResponseWriter, r *http.Request) {
+func (controller HelloWorldController) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	body := map[string]any{
 		"data": map[string]any{
 			"message": "Hello, World!",
@@ -37,4 +25,10 @@ func (route HelloWorldRoute) HandleRequest(w http.ResponseWriter, r *http.Reques
 	w.WriteHeader(http.StatusOK)
 
 	fmt.Fprint(w, string(bodyBytes))
+}
+
+var HelloWorldRoute types.Route = types.Route{
+	Pattern:    "/helloWorld",
+	Method:     http.MethodGet,
+	Controller: HelloWorldController{},
 }

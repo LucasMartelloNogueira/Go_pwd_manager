@@ -1,18 +1,19 @@
 package user
 
 import (
-	"domain/entity"
+	"net/http"
+	"strconv"
+
 	"usecase/user"
+	"util"
 )
 
-type GetUserController interface {
-	GetUser(id int) (*domain.UserWithId, error)
-}
-
-type GetUserControllerImpl struct {
+type GetUserController struct {
 	Usecase user.GetUserUsecase
 }
 
-func (controller GetUserControllerImpl) GetUser(id int) (*domain.UserWithId, error) {
-	return controller.Usecase.GetUser(id)
+func (controller GetUserController) HandleRequest(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.PathValue("id"))
+	user, err := controller.Usecase.GetUser(id)
+	util.GetHttpResponse(w, r, user, err, true)
 }

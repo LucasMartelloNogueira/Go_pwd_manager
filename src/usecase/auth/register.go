@@ -7,7 +7,7 @@ import (
 )
 
 type RegisterUsecase interface {
-	Register(user *entities.User) (entities.UserWithId, error) 
+	Register(user *entities.User) (entities.UserWithId, error)
 }
 
 type RegisterUsecaseImpl struct {
@@ -22,9 +22,9 @@ func (usecase RegisterUsecaseImpl) Register(user *entities.User) (entities.UserW
 	}
 
 	return entities.UserWithIdBuilder(
-				entities.WithId(newUser.Id), 
-				entities.WithName(newUser.Name), 
-				entities.WithEmail(newUser.Email), 
-				entities.WithPassWord(newUser.Password),
-			), nil
+		entities.WithId(newUser.Id),
+		entities.WithName(newUser.Name),
+		entities.WithEmail(newUser.Email),
+		entities.WithPassWord(newUser.Password),
+	), nil
 }

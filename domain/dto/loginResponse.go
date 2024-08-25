@@ -1,14 +1,14 @@
 package domain
 
 type LoginResponse struct {
-	UserId int `json:"user_id"`
+	UserId int    `json:"user_id"`
 	Token  string `json:"token"`
 }
 
 type LoginResponseOpt func(r *LoginResponse)
 
-func WithUserId(userId int) LoginResponseOpt{
-	return func(r *LoginResponse){
+func WithUserId(userId int) LoginResponseOpt {
+	return func(r *LoginResponse) {
 		r.UserId = userId
 	}
 }
@@ -19,11 +19,11 @@ func WithToken(token string) LoginResponseOpt {
 	}
 }
 
-func LoginResponseBuilder(opts ...LoginResponseOpt) LoginResponse{
+func LoginResponseBuilder(opts ...LoginResponseOpt) LoginResponse {
 
 	var loginResponse LoginResponse = LoginResponse{
 		UserId: 0,
-		Token: "",
+		Token:  "",
 	}
 
 	for _, opt := range opts {

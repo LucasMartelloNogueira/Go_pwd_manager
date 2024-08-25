@@ -7,11 +7,11 @@ import (
 )
 
 var (
-	LoginController auth.LoginController = auth.LoginControllerImpl{Usecase: usecases.LoginUsecase}
-	RegisterController auth.RegisterController = auth.RegisterControllerImpl{Usecase: usecases.RegisterUsecase}
+	LoginController    auth.LoginController    = auth.LoginController{Usecase: usecases.LoginUsecase}
+	RegisterController auth.RegisterController = auth.RegisterController{Usecase: usecases.RegisterUsecase}
 
-	CreateUserController user.CreateUserController = user.CreateUserControllerImpl{Usecase: usecases.CreateUserUsecase}
-	DeleteUserController user.DeleteUserController = user.DeleteUserControllerImpl{Usecase: usecases.DeleteUserUsecase}
-	GetUserController user.GetUserController = user.GetUserControllerImpl{Usecase: usecases.GetUserUsecase}
-	UpdateUserController user.UpdateUserController = user.UpdateUserControllerImpl{Usecase: usecases.UpdateUserUsecase}
+	CreateUserController user.CreateUserController = user.CreateUserController{Usecase: usecases.CreateUserUsecase}
+	DeleteUserController user.DeleteUserController = user.DeleteUserController{Usecase: usecases.DeleteUserUsecase}
+	GetUserController    user.GetUserController    = user.GetUserController{Usecase: usecases.GetUserUsecase}
+	UpdateUserController user.UpdateUserController = user.UpdateUserController{Usecase: usecases.UpdateUserUsecase}
 )
