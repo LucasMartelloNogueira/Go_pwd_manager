@@ -1,18 +1,18 @@
 package user
 
 import (
-	"domain/entity"
-	"repository/user"
+	entities "domain/entity"
+	types "domain/types"
 )
 
 type UpdateUserUsecase interface {
-	UpdateUser(user *domain.UserWithId) (*domain.UserWithId, error)
+	UpdateUser(id int, user *entities.User) (*entities.User, error)
 }
 
 type UpdateUserUsecaseImpl struct {
-	Repository user.UserRepository
+	Repository types.Repository[entities.User, entities.NewUser]
 }
 
-func (usecase UpdateUserUsecaseImpl) UpdateUser(user *domain.UserWithId) (*domain.UserWithId, error) {
-	return usecase.Repository.Update(user)
+func (usecase UpdateUserUsecaseImpl) UpdateUser(id int, user *entities.User) (*entities.User, error) {
+	return usecase.Repository.Update(id, user)
 }

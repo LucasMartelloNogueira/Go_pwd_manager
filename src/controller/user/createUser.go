@@ -12,7 +12,7 @@ type CreateUserController struct {
 }
 
 func (controller CreateUserController) HandleRequest(w http.ResponseWriter, r *http.Request) {
-	var body entities.User
+	var body entities.NewUser
 	err1 := util.GetRequestBody(r, &body)
 	user, err2 := controller.Usecase.CreateUser(&body)
 

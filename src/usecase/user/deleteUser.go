@@ -1,18 +1,18 @@
 package user
 
 import (
-	"domain/entity"
-	"repository/user"
+	entities "domain/entity"
+	types "domain/types"
 )
 
 type DeleteUserUsecase interface {
-	DeleteUser(id int) (*domain.UserWithId, error)
+	DeleteUser(id int) (*entities.User, error)
 }
 
 type DeleteUserUsecaseImpl struct {
-	Repository user.UserRepository
+	Repository types.Repository[entities.User, entities.NewUser]
 }
 
-func (usecase DeleteUserUsecaseImpl) DeleteUser(id int) (*domain.UserWithId, error) {
+func (usecase DeleteUserUsecaseImpl) DeleteUser(id int) (*entities.User, error) {
 	return usecase.Repository.DeleteById(id)
 }

@@ -1,9 +1,11 @@
 package repository
 
 import (
-	"repository/user"
+	types "domain/types"
+	entities "domain/entity"
+	"util"
 )
 
 var (
-	UserRepository user.UserRepository = user.UserRepositoryCsv{}
+	CsvUserReposiory types.Repository[entities.User, entities.NewUser] = CsvRepository[entities.User, entities.NewUser]{filename: util.Constants["USER_CSV_FILENAME"]}
 )

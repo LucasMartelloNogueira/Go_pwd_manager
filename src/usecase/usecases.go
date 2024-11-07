@@ -7,11 +7,11 @@ import (
 )
 
 var (
-	LoginUsecase    auth.LoginUsecase    = auth.LoginUsecaseImpl{Repository: repositories.UserRepository}
-	RegisterUsecase auth.RegisterUsecase = auth.RegisterUsecaseImpl{Repository: repositories.UserRepository}
+	LoginUsecase    auth.LoginUsecase    = auth.LoginUsecaseImpl{Repository: repositories.CsvUserReposiory}
+	RegisterUsecase auth.RegisterUsecase = auth.RegisterUsecaseImpl{Repository: repositories.CsvUserReposiory}
 
-	CreateUserUsecase user.CreateUserUsecase = user.CreateUserUsecaseImpl{Repository: repositories.UserRepository}
-	DeleteUserUsecase user.DeleteUserUsecase = user.DeleteUserUsecaseImpl{Repository: repositories.UserRepository}
-	GetUserUsecase    user.GetUserUsecase    = user.GetUserUsecaseImpl{Repository: repositories.UserRepository}
-	UpdateUserUsecase user.UpdateUserUsecase = user.UpdateUserUsecaseImpl{Repository: repositories.UserRepository}
+	CreateUserUsecase user.CreateUserUsecase = user.CreateUserUsecaseImpl{Repository: repositories.CsvUserReposiory}
+	DeleteUserUsecase user.DeleteUserUsecase = user.DeleteUserUsecaseImpl{Repository: repositories.CsvUserReposiory}
+	GetUserUsecase    user.GetUserUsecase    = user.GetUserUsecaseImpl{Repository: repositories.CsvUserReposiory}
+	UpdateUserUsecase user.UpdateUserUsecase = user.UpdateUserUsecaseImpl{Repository: repositories.CsvUserReposiory}
 )

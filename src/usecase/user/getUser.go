@@ -1,19 +1,18 @@
 package user
 
 import (
-	"domain/entity"
-	repositories "repository"
-	"repository/user"
+	entities "domain/entity"
+	types "domain/types"
 )
 
 type GetUserUsecase interface {
-	GetUser(id int) (*domain.UserWithId, error)
+	GetUser(id int) (*entities.User, error)
 }
 
 type GetUserUsecaseImpl struct {
-	Repository user.UserRepository
+	Repository types.Repository[entities.User, entities.NewUser]
 }
 
-func (usecase GetUserUsecaseImpl) GetUser(id int) (*domain.UserWithId, error) {
-	return repositories.UserRepository.FindById(id)
+func (usecase GetUserUsecaseImpl) GetUser(id int) (*entities.User, error) {
+	return usecase.Repository.FindById(id)
 }

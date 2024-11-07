@@ -10,7 +10,7 @@ import (
 type UserRepositoryCsv struct {
 }
 
-func (repository UserRepositoryCsv) FindById(id int) (*domain.UserWithId, error) {
+func (repository UserRepositoryCsv) FindById(id int) (*domain.User, error) {
 	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
@@ -33,7 +33,7 @@ func (repository UserRepositoryCsv) FindById(id int) (*domain.UserWithId, error)
 
 }
 
-func (repository UserRepositoryCsv) FindByColumn(column string, value string) (*domain.UserWithId, error) {
+func (repository UserRepositoryCsv) FindByColumn(column string, value string) (*domain.User, error) {
 	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
@@ -67,7 +67,7 @@ func (repository UserRepositoryCsv) FindByColumn(column string, value string) (*
 
 }
 
-func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.UserWithId, error) {
+func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.User, error) {
 	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
@@ -86,7 +86,7 @@ func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.UserWithI
 
 	newId := maxId + 1
 
-	var newUser *domain.UserWithId = new(domain.UserWithId)
+	var newUser *domain.User = new(domain.User)
 	newUser.Id = newId
 	newUser.Name = user.Name
 	newUser.Email = user.Email
@@ -104,7 +104,7 @@ func (repository UserRepositoryCsv) Create(user *domain.User) (*domain.UserWithI
 
 }
 
-func (repository UserRepositoryCsv) DeleteById(id int) (*domain.UserWithId, error) {
+func (repository UserRepositoryCsv) DeleteById(id int) (*domain.User, error) {
 	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 
@@ -113,7 +113,7 @@ func (repository UserRepositoryCsv) DeleteById(id int) (*domain.UserWithId, erro
 	}
 
 	deleteIndex := -1
-	var deletedUser *domain.UserWithId = new(domain.UserWithId)
+	var deletedUser *domain.User = new(domain.User)
 
 	for i, userRecord := range usersDataFrame.Values {
 
@@ -144,7 +144,7 @@ func (repository UserRepositoryCsv) DeleteById(id int) (*domain.UserWithId, erro
 
 }
 
-func (repository UserRepositoryCsv) Update(user *domain.UserWithId) (*domain.UserWithId, error) {
+func (repository UserRepositoryCsv) Update(user *domain.User) (*domain.User, error) {
 	var filename string = "../../storage/users.csv"
 	usersDataFrame, err := util.GetDataFrame(filename)
 

@@ -12,9 +12,9 @@ type RegisterController struct {
 }
 
 func (controller RegisterController) HandleRequest(w http.ResponseWriter, r *http.Request) {
-	var user entities.User
-	util.GetRequestBody(r, &user)
+	var newUser entities.NewUser
+	util.GetRequestBody(r, &newUser)
 
-	userWithId, err := controller.Usecase.Register(&user)
+	userWithId, err := controller.Usecase.Register(&newUser)
 	util.GetHttpResponse(w, r, userWithId, err, false)
 }

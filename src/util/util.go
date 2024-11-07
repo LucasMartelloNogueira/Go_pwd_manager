@@ -25,7 +25,7 @@ func GetRequestBody(r *http.Request, body any) error {
 	return nil
 }
 
-func RecordToUser(record []string) (*domain.UserWithId, error) {
+func RecordToUser(record []string) (*domain.User, error) {
 
 	id, err := strconv.Atoi(record[0])
 
@@ -37,7 +37,7 @@ func RecordToUser(record []string) (*domain.UserWithId, error) {
 	var email string = record[2]
 	var password = record[3]
 
-	var user *domain.UserWithId = new(domain.UserWithId)
+	var user *domain.User = new(domain.User)
 	user.Id = id
 	user.Name = name
 	user.Email = email
@@ -46,7 +46,7 @@ func RecordToUser(record []string) (*domain.UserWithId, error) {
 	return user, nil
 }
 
-func UserToRecord(user *domain.UserWithId) []string {
+func UserToRecord(user *domain.User) []string {
 	return []string{
 		strconv.FormatInt(int64(user.Id), 10),
 		user.Name,

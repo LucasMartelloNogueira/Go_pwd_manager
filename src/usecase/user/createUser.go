@@ -1,18 +1,18 @@
 package user
 
 import (
-	"domain/entity"
-	"repository/user"
+	entities "domain/entity"
+	types "domain/types"
 )
 
 type CreateUserUsecase interface {
-	CreateUser(user *domain.User) (*domain.UserWithId, error)
+	CreateUser(newUser *entities.NewUser) (*entities.User, error)
 }
 
 type CreateUserUsecaseImpl struct {
-	Repository user.UserRepository
+	Repository types.Repository[entities.User, entities.NewUser]
 }
 
-func (usecase CreateUserUsecaseImpl) CreateUser(user *domain.User) (*domain.UserWithId, error) {
-	return usecase.Repository.Create(user)
+func (usecase CreateUserUsecaseImpl) CreateUser(newUser *entities.NewUser) (*entities.User, error) {
+	return usecase.Repository.Create(newUser)
 }

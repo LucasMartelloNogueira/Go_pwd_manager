@@ -3,28 +3,23 @@ package auth
 import (
 	"CustomErrors"
 	entities "domain/entity"
-	"repository/user"
+	types "domain/types"
 )
 
 type RegisterUsecase interface {
-	Register(user *entities.User) (entities.UserWithId, error)
+	Register(newUser *entities.NewUser) (*entities.User, error)
 }
 
 type RegisterUsecaseImpl struct {
-	Repository user.UserRepository
+	Repository types.Repository[entities.User, entities.NewUser]
 }
 
-func (usecase RegisterUsecaseImpl) Register(user *entities.User) (entities.UserWithId, error) {
-	newUser, err := usecase.Repository.Create(user)
+func (usecase RegisterUsecaseImpl) Register(newUser *entities.NewUser) (*entities.User, error) {
+	user, err := usecase.Repository.Create(newUser)
 
 	if err != nil {
-		return entities.UserWithIdBuilder(), CustomErrors.ErrInternalServerError
+		return nil, CustomErrors.ErrInternalServerError
 	}
 
-	return entities.UserWithIdBuilder(
-		entities.WithId(newUser.Id),
-		entities.WithName(newUser.Name),
-		entities.WithEmail(newUser.Email),
-		entities.WithPassWord(newUser.Password),
-	), nil
+	return user, nil
 }
